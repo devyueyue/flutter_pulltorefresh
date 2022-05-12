@@ -4,14 +4,15 @@
  *   createTime:2018-05-14 17:39
  */
 
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart'
     hide RefreshIndicator, RefreshIndicatorState;
 import 'package:flutter/widgets.dart';
+
 import '../../pull_to_refresh.dart';
 import '../internals/indicator_wrap.dart';
 import '../smart_refresher.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 
 /// direction that icon should place to the text
 enum IconPosition { left, right, top, bottom }
@@ -56,30 +57,32 @@ class ClassicHeader extends RefreshIndicator {
   final IconPosition iconPos;
 
   final TextStyle textStyle;
+  final Color? headerBg;
 
-  const ClassicHeader({
-    Key? key,
-    RefreshStyle refreshStyle: RefreshStyle.Follow,
-    double height: 60.0,
-    Duration completeDuration: const Duration(milliseconds: 600),
-    this.outerBuilder,
-    this.textStyle: const TextStyle(color: Colors.grey),
-    this.releaseText,
-    this.refreshingText,
-    this.canTwoLevelIcon,
-    this.twoLevelView,
-    this.canTwoLevelText,
-    this.completeText,
-    this.failedText,
-    this.idleText,
-    this.iconPos: IconPosition.left,
-    this.spacing: 15.0,
-    this.refreshingIcon,
-    this.failedIcon: const Icon(Icons.error, color: Colors.grey),
-    this.completeIcon: const Icon(Icons.done, color: Colors.grey),
-    this.idleIcon = const Icon(Icons.arrow_downward, color: Colors.grey),
-    this.releaseIcon = const Icon(Icons.refresh, color: Colors.grey),
-  }) : super(
+  const ClassicHeader(
+      {Key? key,
+      RefreshStyle refreshStyle: RefreshStyle.Follow,
+      double height: 60.0,
+      Duration completeDuration: const Duration(milliseconds: 600),
+      this.outerBuilder,
+      this.textStyle: const TextStyle(color: Colors.grey),
+      this.releaseText,
+      this.refreshingText,
+      this.canTwoLevelIcon,
+      this.twoLevelView,
+      this.canTwoLevelText,
+      this.completeText,
+      this.failedText,
+      this.idleText,
+      this.iconPos: IconPosition.left,
+      this.spacing: 15.0,
+      this.refreshingIcon,
+      this.failedIcon: const Icon(Icons.error, color: Colors.grey),
+      this.completeIcon: const Icon(Icons.done, color: Colors.grey),
+      this.idleIcon = const Icon(Icons.arrow_downward, color: Colors.grey),
+      this.releaseIcon = const Icon(Icons.refresh, color: Colors.grey),
+      this.headerBg})
+      : super(
           key: key,
           refreshStyle: refreshStyle,
           completeDuration: completeDuration,
@@ -175,6 +178,8 @@ class _ClassicHeaderState extends RefreshIndicatorState<ClassicHeader> {
     return widget.outerBuilder != null
         ? widget.outerBuilder!(container)
         : Container(
+            color:
+                widget.headerBg == null ? Colors.transparent : widget.headerBg,
             child: Center(child: container),
             height: widget.height,
           );
